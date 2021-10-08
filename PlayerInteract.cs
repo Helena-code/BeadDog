@@ -7,7 +7,7 @@ public class PlayerInteract : MonoBehaviour
     private PlayerView _playerView;
     private Vector2 _lookDirection;
 
-   [SerializeField] private GameManager _gameManager;
+    [SerializeField] private GameManager _gameManager;
 
 
     public float healthPoint = 25f;                     // очки аптечки 
@@ -43,7 +43,7 @@ public class PlayerInteract : MonoBehaviour
     public GameObject bulletPrefab;                     // префаб снаряда
     public DialogScript dialogScript;
 
-    public MindScript mindScript;
+    public MindVisualiser mindScript;
 
     public AudioSource audioSource;
     public AudioClip clip;
@@ -58,8 +58,8 @@ public class PlayerInteract : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
-        
-        mindScript = GetComponent<MindScript>();
+
+        mindScript = GetComponent<MindVisualiser>();
         dialogScript = GetComponent<DialogScript>();
 
         audioSource = GetComponent<AudioSource>();
@@ -183,11 +183,11 @@ public class PlayerInteract : MonoBehaviour
         // если значение текущего здоровья приблизилось к 0, то вызвать метод смерть
     }
 
-    //МЕТОД МЫСЛЕЙ ИГРОКА
-    public void Mind()
+    private void ShowMind()
     {
         mindScript.ShowMind();
     }
+
     public void EnterButton()
     {
         if (Input.GetKeyDown(KeyCode.F))
@@ -211,6 +211,11 @@ public class PlayerInteract : MonoBehaviour
         if (collision.gameObject.layer == 13)
         {
             _gameManager.CheckCompleteQuest();
+        }
+
+        if (collision.gameObject.layer == 14)
+        {
+            ShowMind();
         }
     }
 }

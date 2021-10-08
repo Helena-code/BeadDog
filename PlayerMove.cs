@@ -2,11 +2,11 @@
 
 public class PlayerMove : MonoBehaviour
 {
-    public Vector2 LookDirection  // зачем?
+    public Vector2 LookDirection
     {
         get { return _lookDirection; }
     }
-    
+
     [SerializeField] private float _speed;
     [SerializeField] private FixedJoystick _fixedJoystick;
 
@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
         _vertical = _fixedJoystick.Vertical;
 
 #endif
-        Vector2 move = new Vector2(_horizontal, _vertical);                     // создаю вектор, в который записываю данные о задаваемом положении игрока
+        Vector2 move = new Vector2(_horizontal, _vertical);
         if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))  // сравнение х или y c 0 через эту функцию, потому что через == не точно
         {
             _lookDirection.Set(move.x, move.y);
@@ -45,8 +45,8 @@ public class PlayerMove : MonoBehaviour
         }
         _playerView.SetLookDirection(_lookDirection.x, _lookDirection.y);
         _playerView.PlayMovingAnimation(move.magnitude);
-        Debug.Log("" + move.magnitude);
-                          
+        //Debug.Log("" + move.magnitude);
+
         if (move.magnitude > 0.1)
         {
             //audioSource.PlayOneShot(clip);

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MindObject : MonoBehaviour
 {
@@ -9,8 +7,6 @@ public class MindObject : MonoBehaviour
         PlayerInteract player = other.GetComponent<PlayerInteract>();
         if (player != null)
         {
-            //Debug.Log("объект мысль");
-            player.Mind();
             Destroy(gameObject);
         }
     }

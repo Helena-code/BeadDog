@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class QuestController : MonoBehaviour
+public sealed class QuestController : MonoBehaviour
 {
     //private List<bool> _quests;
     //private Dictionary<int, bool> _quests;
