@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class QuestThing : MonoBehaviour
 {
+    public bool IsCollected
+    {
+        get { return _isCollected; }
+    }
+
+    private int _questNumber = 1;   // TODO сделать связку с самими квестами или назначать их программно
+    private bool _isCollected;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        PlayerControllerScr player = other.GetComponent<PlayerControllerScr>();
-        if (player != null)
+        PlayerInteract _player = other.GetComponent<PlayerInteract>();
+        if (_player != null)
         {
-            player.gameManager.quest1 = true;
-            Debug.Log("квест 1 выполнен");
-            player.bunnyQuestState = 2;
+            _isCollected = true;
+
+            
+            //_player.bunnyQuestState = 2;
+
+
+            
             Destroy(gameObject);
             // УСТАНОВИТЬ ЗНАЧЕНИЕ КВЕСТА 1 НА ВЫПОЛНЕНО
             // СМЕНИТЬ АНИМАЦИЮ У КВЕСТОВЫХ ПЕРСОНАЖЕЙ 1

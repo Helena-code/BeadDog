@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ShotScript : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+   
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.GetComponent<BulletShot>())
+        if (collision.gameObject.GetComponent<BulletShot>())
         {
             Debug.Log("попал");
         }

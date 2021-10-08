@@ -10,13 +10,13 @@ public class PortalScr : MonoBehaviour
     public GameObject pl;
     public int exitLocationNumber;
 
-    PlayerControllerScr player;
+    PlayerInteract player;
     Rigidbody2D rb;
     public bool doorOpen = false;
 
     public void Awake()
     {
-        player = pl.GetComponent<PlayerControllerScr>();
+        player = pl.GetComponent<PlayerInteract>();
         rb = pl.GetComponent<Rigidbody2D>();
     }
     public void Door()
@@ -24,7 +24,7 @@ public class PortalScr : MonoBehaviour
         if (doorOpen)
         {
             rb.position = doorExit.transform.position;
-            player.gameManager.ChangeCamera(exitLocationNumber);
+            //player._gameManager.ChangeCamera(exitLocationNumber); // TODO ВЕРНУТЬ, но в другое место
 
             // прописать, что игрок должен выйти из зоны коллаидера двери
             // и отойти к какой нибудь точке - наверное уже не надо
@@ -46,7 +46,7 @@ public class PortalScr : MonoBehaviour
 }
     //private void OnTriggerEnter2D(Collider2D other)
     //{
-    //    PlayerControllerScr player = other.GetComponent<PlayerControllerScr>();
+    //    PlayerController player = other.GetComponent<PlayerController>();
     //    if (player != null)
     //    {
     //        //Debug.Log("дверь увидела игрока");

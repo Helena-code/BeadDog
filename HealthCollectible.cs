@@ -6,7 +6,7 @@ public class HealthCollectible : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        PlayerControllerScr player = other.GetComponent<PlayerControllerScr>();
+        PlayerInteract player = other.GetComponent<PlayerInteract>();
         if (player != null)
         {
             Destroy(gameObject);
