@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "New GameBalance", menuName = "Menu Game Balance")]
+[CreateAssetMenu(fileName = "New GameBalance", menuName = "ScriptableObjects/Menu Game Balance")]
 public class GameBalance : ScriptableObject
 {
 	public static GameBalance Instance

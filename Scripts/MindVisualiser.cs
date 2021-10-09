@@ -12,7 +12,7 @@ public class MindVisualiser : MonoBehaviour
     private int _mindNumber = 0;
 
 
-    void Awake()   
+    private void Awake()   
     {
         _mindWindow.SetActive(false);
         _mindsArray = _mindBundle.MindsArray;
@@ -26,7 +26,7 @@ public class MindVisualiser : MonoBehaviour
         StartCoroutine(ReadingMind());
     }
 
-    public void HideMind()
+    private void HideMind()
     {
         _mindWindow.SetActive(false);
     }

@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Scripts.Enums;
 
 public class PlayerInteract : MonoBehaviour
 {
+    [SerializeField] private GameManager _gameManager;
+
     private PlayerMove _playerMove;
     private PlayerView _playerView;
     private Vector2 _lookDirection;
-
-    [SerializeField] private GameManager _gameManager;
-
 
     public float healthPoint = 25f;                     // очки аптечки 
 
@@ -132,7 +132,6 @@ public class PlayerInteract : MonoBehaviour
 
     }
 
-    // МЕТОД ДИАЛОГА
     void Dialog(string npc)
     {
         if (npc == "Bunny")
@@ -155,20 +154,18 @@ public class PlayerInteract : MonoBehaviour
 
     }
 
-    // МЕТОД ЗАПУСКА СНАРЯДА
     public void Launch()
     {
         if (bulletNumber <= 0)
         {
             return;
         }
-        GameObject bullet = Instantiate(bulletPrefab, rigidbody.position + Vector2.up, Quaternion.identity);       // создаю снаряд
-        BulletShot bulletShot = bullet.GetComponent<BulletShot>();                                                 // получаю доступ к его скрипту
-        bulletShot.Launch(_playerMove.LookDirection, 300);                                                                     // запускаю метод запуска 
+        GameObject bullet = Instantiate(bulletPrefab, rigidbody.position + Vector2.up, Quaternion.identity);       // TODO убрать instantiate
+        BulletShot bulletShot = bullet.GetComponent<BulletShot>();                                                 
+        bulletShot.Launch(_playerMove.LookDirection, 300);                                                                     
         bulletNumber -= 1;
     }
 
-    //МЕТОД ИЗМЕНЕНИЯ ЗДОРОВЬЯ
     public void ChangeHealth(float amount)
     {
         if (amount < 0)
@@ -206,16 +203,33 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.layer == 13)
+        var temp = other.GetComponent<IInteractible>();
+        if (temp != null)
         {
-            _gameManager.CheckCompleteQuest();
-        }
-
-        if (collision.gameObject.layer == 14)
-        {
-            ShowMind();
+            ObjectType otherType = temp.GetObjectType();
+            switch (otherType)            
+            {
+                case ObjectType.BulletPack:
+                    break;
+                case ObjectType.Door:
+                    break;
+                case ObjectType.HealthBag:
+                    break;
+                case ObjectType.Key:
+                    break;
+                case ObjectType.Mind:
+                    ShowMind();
+                    break;
+                case ObjectType.NPC:
+                    break;
+                case ObjectType.QuestThing:
+                    _gameManager.CheckCompleteQuest();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

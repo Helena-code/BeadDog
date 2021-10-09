@@ -6,7 +6,9 @@ public class PlayerView : MonoBehaviour
 
     private PlayerInteract _playerController;
     private PlayerMove _playerMove;
-
+    private const string _animatorLookX = "LookX";
+    private const string _animatorLookY = "LookY";
+    private const string _animatorSpeed = "Speed";
 
     private void Awake()
     {
@@ -16,12 +18,12 @@ public class PlayerView : MonoBehaviour
 
     public void SetLookDirection(float x, float y)
     {
-        _animator.SetFloat("LookX", x);
-        _animator.SetFloat("LookY", y);
+        _animator.SetFloat(_animatorLookX, x);
+        _animator.SetFloat(_animatorLookY, y);
     }
 
     public void PlayMovingAnimation(float speed)
     {
-        _animator.SetFloat("Speed", speed);
+        _animator.SetFloat(_animatorSpeed, speed);
     }
 }

@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CameraController _cameraController;
     [SerializeField] private QuestController _questController;
 
-
     void Update()
     {
         if (quest1 == true)

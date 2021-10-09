@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "New MindBundleData", menuName = "Menu Bundle Data")]
+[CreateAssetMenu(fileName = "New MindBundleData", menuName = "ScriptableObjects/Menu Mind Bundle Data")]
 public class MindsBundle : ScriptableObject
 {
    [SerializeField] [TextArea]
