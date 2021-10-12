@@ -17,12 +17,4 @@
         BulletPack,
         NPC
     }
-
-    public enum MeetStage
-    {
-        FirstMeet,
-        InProcess,
-        Complete,
-        None
-    }
 }

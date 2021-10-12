@@ -1,44 +1,17 @@
-﻿using Scripts.Enums;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCScript : MonoBehaviour, IInteractible
+public class NPCScript : MonoBehaviour
 {
-    [SerializeField] private ObjectType _objectType;
-    [SerializeField] private NPC _npctype;
-
-    private MeetStage _meetStage;
-
+    public string npcName;
+    //public Animator animator;
     private void Awake()
     {
-        SetStage(MeetStage.FirstMeet);
+        //animator = GetComponent<Animator>();
     }
-
-    public ObjectType GetObjectType()
+    private void Update()
     {
-        return _objectType;
-    }
-
-    public void Talk()
-    {
-        GameManager.Instance.StartDialog(_npctype,_meetStage);
-    }
-
-    private void SetStage(MeetStage stage)
-    {
-        switch (stage)
-        {
-            case MeetStage.FirstMeet:
-                _meetStage = MeetStage.FirstMeet;
-                break;
-            case MeetStage.InProcess:
-                _meetStage = MeetStage.InProcess;
-                break;
-            case MeetStage.Complete:
-                _meetStage = MeetStage.Complete;
-                break;
-            case MeetStage.None:
-                _meetStage = MeetStage.None;
-                break;
-        }
+        
     }
 }

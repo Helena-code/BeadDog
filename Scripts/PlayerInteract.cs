@@ -10,22 +10,41 @@ public class PlayerInteract : MonoBehaviour
     private PlayerView _playerView;
     private Vector2 _lookDirection;
 
-
-
-
     public float healthPoint = 25f;                     // очки аптечки 
+
+    public Text healthText;
+    public Text blueBeadsText;
+    public Text bulletText;
+    public Text whiteBeadsText;
+    public Text LockText;
+
     public string local = "red";
+
     float maxHealth = 100f;                             // максимальное количество здоровья
     float currentHealth;                                // текущее количество здоровья
     public int healthChestNumber;                            // количество аптечек
     public int bulletNumber;                                 // количество патронов
     public int whiteBeadsNumber;                             // количество белых бусин
     public int lockNumber;                                   // количество замочков
+
+    bool firstMeet = true;                                   // первая встреча персонажа
+    public int bunnyQuestState = 0;
+    int frogQuestState = 0;
+    int cockQuestState = 0;
+    // стадии квеста других персонажей
+    int currentState = 0;
+
+
+
     Rigidbody2D rigidbody;
 
-    public GameObject bulletPrefab;                    
-    public DialogController dialogScript;
+
+
+    public GameObject bulletPrefab;                     // префаб снаряда
+    public DialogScript dialogScript;
+
     public MindVisualiser mindScript;
+
     public AudioSource audioSource;
     public AudioClip clip;
 
@@ -41,7 +60,7 @@ public class PlayerInteract : MonoBehaviour
         currentHealth = maxHealth;
 
         mindScript = GetComponent<MindVisualiser>();
-        dialogScript = GetComponent<DialogController>();
+        dialogScript = GetComponent<DialogScript>();
 
         audioSource = GetComponent<AudioSource>();
 
@@ -55,6 +74,16 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
+
+
+        // ПРЕДВАРИТЕЛЬНЫЙ UI
+        healthText.text = "Health: " + currentHealth;
+        blueBeadsText.text = "Blue beads: " + healthChestNumber;
+        bulletText.text = "Bullet: " + bulletNumber;
+        whiteBeadsText.text = "White beads: " + whiteBeadsNumber;
+        LockText.text = "Lock: " + lockNumber;
+
+
         // НАЗНАЧЕНИЕ КНОПКИ СТРЕЛЯТЬ
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -77,7 +106,7 @@ public class PlayerInteract : MonoBehaviour
             if (hit1.collider != null)
             {
                 //Debug.Log("Луч запущен и поймал NPC");
-                //Dialog(hit1.collider.gameObject.GetComponent<NPCScript>().npcName);         // рефакторинг
+                Dialog(hit1.collider.gameObject.GetComponent<NPCScript>().npcName);
             }
             RaycastHit2D hit2 = Physics2D.Raycast(rigidbody.position + Vector2.up * 0.2f, _playerMove.LookDirection, 3.0f, 12); //LayerMask.GetMask("Portal")
             if (hit2.collider != null)
@@ -100,6 +129,28 @@ public class PlayerInteract : MonoBehaviour
     // МЕТОД ОТКРЫВАНИЯ ДВЕРИ
     void OpenDoor() // нужен ли вообще? посмотреть, когда будет интерфес управления
     {
+
+    }
+
+    void Dialog(string npc)
+    {
+        if (npc == "Bunny")
+        {
+            currentState = bunnyQuestState;
+            if (bunnyQuestState == 0) bunnyQuestState = 1;
+        }
+        else if (npc == "Frog")
+        {
+            currentState = frogQuestState;
+            if (frogQuestState == 0) frogQuestState = 1;
+        }
+        else if (npc == "Cock")
+        {
+            currentState = cockQuestState;
+            if (cockQuestState == 0) cockQuestState = 1;
+        }
+
+        dialogScript.ShowDialogCanvas(npc, currentState);
 
     }
 
@@ -142,7 +193,7 @@ public class PlayerInteract : MonoBehaviour
             if (hit1.collider != null)
             {
                 //Debug.Log("Луч запущен и поймал NPC");
-               // Dialog(hit1.collider.gameObject.GetComponent<NPCScript>().npcName);   // рефакторинг
+                Dialog(hit1.collider.gameObject.GetComponent<NPCScript>().npcName);
             }
             RaycastHit2D hit2 = Physics2D.Raycast(rigidbody.position + Vector2.up * 0.2f, _playerMove.LookDirection, 3.0f, 12);
             if (hit2.collider != null)
@@ -172,7 +223,6 @@ public class PlayerInteract : MonoBehaviour
                     ShowMind();
                     break;
                 case ObjectType.NPC:
-                    other.gameObject.GetComponent<NPCScript>().Talk();
                     break;
                 case ObjectType.QuestThing:
                     _gameManager.CheckCompleteQuest();
